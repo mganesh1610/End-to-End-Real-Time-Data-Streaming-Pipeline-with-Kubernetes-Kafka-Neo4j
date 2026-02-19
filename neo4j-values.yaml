@@ -1,0 +1,17 @@
+neo4j:
+  name: neo4j
+  edition: community
+  password: <redacted>
+  plugins:
+    - "graph-data-science"
+
+resources:
+  cpu: "1000m"
+  memory: "2Gi"
+
+volumes:
+  data:
+    mode: "defaultStorageClass"
+
+#podLabels:
+#  app: neo4j-standalone
