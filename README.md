@@ -103,6 +103,6 @@ kubectl apply -f kafka-neo4j-connector.yaml
 
 * **Orchestration:** Moving from Docker to Kubernetes highlighted the resilience of decoupling data ingestion from the database. If the Neo4j pod crashes, Minikube automatically restarts it, and Kafka ensures no stream data is lost during downtime.
 * **Networking:** Correctly configuring Kafka in a Kubernetes environment requires strict handling of advertised listeners to allow host-machine Python scripts to communicate with cluster-internal services.
-* **Future Additions:** The architecture can be further optimized by implementing a Neo4j cluster mode for high availability, utilizing Kafka topic partitioning for parallel processing, and shifting Kafka to KRaft mode to operate without ZooKeeper.
+
 
 ---
