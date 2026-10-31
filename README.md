@@ -85,7 +85,7 @@ kubectl apply -f ./kafka-setup.yaml
 ```
 
 ### 2. Neo4j StatefulSet via Helm
-Deployed the official Neo4j Helm chart. We utilized a custom `neo4j-values.yaml` to set passwords and auto-enable the GDS plugin using `NEO4J_PLUGINS: '["graph-data-science"]'`.
+Deploy the official Neo4j Helm chart with `neo4j-values.yaml` to enable the GDS plugin. The chart generates an initial password because `neo4j.password` is empty; `logInitialPassword: false` keeps it out of the Helm install output. Retrieve the generated password privately from the release's Kubernetes authentication Secret using the [Neo4j Helm documentation](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/#_neo4j_password). Do not add it to this repository.
 ```bash
 helm install my-neo4j-release neo4j/neo4j -f neo4j-values.yaml
 kubectl apply -f neo4j-service.yaml
@@ -93,9 +93,12 @@ kubectl apply -f neo4j-service.yaml
 
 ### 3. Kafka Connect to Neo4j Sink
 Deployed a custom image (`roy012299/kafka-neo4j-connect:latest`) mapping `CONNECT_BOOTSTRAP_SERVERS` to Kafka and `CONNECT_NEO4J_URI` to Neo4j.
+The reference sink JSON has a `<set-at-registration>` placeholder. Supply the current Neo4j password only in a private, untracked connector configuration when registering the sink.
 ```bash
 kubectl apply -f kafka-neo4j-connector.yaml
 ```
+
+If an existing database used the password previously published in this repository, change the `neo4j` user's password in that database and update the registered connector's credential. Editing `neo4j-values.yaml` does not rotate an initialized database. Follow [Neo4j's password-change instructions](https://neo4j.com/docs/operations-manual/current/authentication-authorization/manage-users/#auth-changing-current-user-password); the original initial password may also remain in the Helm-created Kubernetes Secret after a database password change.
 
 ---
 

@@ -1,9 +1,11 @@
 neo4j:
   name: neo4j
   edition: community
-  password: <redacted>
+  password: ""
   plugins:
     - "graph-data-science"
+
+logInitialPassword: false
 
 resources:
   cpu: "1000m"

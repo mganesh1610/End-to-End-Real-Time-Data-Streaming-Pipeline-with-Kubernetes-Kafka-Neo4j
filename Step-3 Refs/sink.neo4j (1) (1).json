@@ -14,7 +14,7 @@
     "errors.log.include.messages": true,
     "neo4j.uri": "bolt://neo4j-service:7687",
     "neo4j.authentication.basic.username": "neo4j",
-    "neo4j.authentication.basic.password": "<redacted>",
+    "neo4j.authentication.basic.password": "<set-at-registration>",
     "neo4j.cypher.topic.nyc_taxicab_data": "MERGE (p:Location {name: toInteger(__value.PULocationID)}) MERGE (d:Location {name: toInteger(__value.DOLocationID)}) MERGE (p)-[:TRIP {distance: toFloat(__value.trip_distance), fare: toFloat(__value.fare_amount), pickup_dt: datetime(__value.tpep_pickup_datetime), dropoff_dt: datetime(__value.tpep_dropoff_datetime)}]->(d)"
   }
 }
